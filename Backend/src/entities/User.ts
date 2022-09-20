@@ -26,24 +26,27 @@ export class User extends BaseEntity {
 	})
 	email: string;
 
-	@CreateDateColumn()
-	created_at: Date;
-
-	@UpdateDateColumn()
-	updated_at: Date;
-
 	@Column({
 		unique: false,
 		nullable: false,
 	})
 	password: string;
 
-	@OneToMany(
-		() => Course,
-		owning_course => owning_course.owned_user,
-	)
-	owning_course: Course[];
+	@Column({
+		unique: false,
+		nullable: false,
+	})
+	name: string;
 
+	//자동생성컬럼
+	@CreateDateColumn()
+	created_at: Date;
+
+	@UpdateDateColumn()
+	updated_at: Date;
+
+
+	//관계 관련 컬럼
 	@ManyToMany(
 		() => Course,
 		studying_courses => studying_courses.registered_users,
@@ -52,6 +55,12 @@ export class User extends BaseEntity {
 		name: 'register'
 	})
 	studying_courses: Course[]
+
+	@OneToMany(
+		() => Course,
+		owning_course => owning_course.owned_user,
+	)
+	owning_course: Course[];
 
 	@ManyToMany(
 		() => Course,
