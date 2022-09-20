@@ -1,0 +1,20 @@
+{
+	"name": "ai_educate_system",
+	"version": "0.0.0",
+	"main": "app.js",
+	"scripts": {
+		"start": "nodemon ./dist/app.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@types/express": "^4.17.14",
+		"@types/morgan": "^1.9.3",
+		"@types/node": "^18.7.18",
+		"express": "^4.18.1",
+		"morgan": "^1.10.0",
+		"mysql2": "^2.3.3",
+		"nodemon": "^2.0.20",
+		"typeorm": "^0.3.9"
+	}
+}

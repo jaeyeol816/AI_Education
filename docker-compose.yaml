@@ -1,0 +1,12 @@
+version: '3.8'  
+services:
+  backend_server:
+    build: ./Backend
+    ports:
+      - '8111:80'
+    volumes:
+      - ./Backend:/app
+      - /app/node_modules
+    env_file:
+      - ./envs/backend.env
+    platform: linux/amd64
