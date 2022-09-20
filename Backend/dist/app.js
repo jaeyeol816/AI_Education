@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const typeorm_1 = require("typeorm");
+const User_1 = require("./entities/User");
+const Course_1 = require("./entities/Course");
 const app = (0, express_1.default)();
 app.set('port', process.env.PORT || 80);
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -26,7 +28,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
             username: process.env.DB_USERNAME,
             password: process.env.DB_PASSWORD,
             database: process.env.DB_DATABASE,
-            entities: [],
+            entities: [User_1.User, Course_1.Course],
             synchronize: true,
             charset: 'UTF8_GENERAL_CI',
         });
