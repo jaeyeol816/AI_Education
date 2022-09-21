@@ -6,6 +6,8 @@ import passportConfig from './passport';
 
 import { User } from './entities/User';
 import { Course } from './entities/Course';
+import authRouter from './routes/auth';
+import courseRouter from './routes/course';
 
 
 const app = express();
@@ -38,6 +40,9 @@ const main = async () => {
 	app.use(express.urlencoded({ extended: false }));
 	app.use(passport.initialize());
 	passportConfig();
+
+	app.use('/auth', authRouter);
+	app.use('/course', courseRouter);
 
 	app.get('/', (req, res) => {
 		res.json({ signal: 'success~' });

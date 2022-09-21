@@ -29,7 +29,7 @@ export class Course extends BaseEntity {
 		unique: true,
 		nullable: false,
 	})
-	code: number;
+	code: string;
 
 	@CreateDateColumn()
 	created_at: Date;

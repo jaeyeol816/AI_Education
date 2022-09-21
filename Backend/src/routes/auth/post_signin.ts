@@ -10,7 +10,7 @@ export const postSigninRouter: RequestHandler = (req, res, next) => {
 		}
 		if (!user) {
 			return res.status(405).json({
-				code: 405, 
+				status: 405, 
 				message: 'login failed',
 			});
 		}
@@ -24,7 +24,7 @@ export const postSigninRouter: RequestHandler = (req, res, next) => {
 				issuer: 'ai-education',
 			});
 			return res.status(200).json({
-				code: 200,
+				status: 200,
 				token,
 			});
 		}

@@ -46,20 +46,21 @@ export const postSignupRouter: RequestHandler = async (req, res, next) => {
 				},
 			);
 			return res.status(200).json({
-				code: 200,
+				status: 200,
 				token: token,
 			});
 		}
 		else {
 			return res.status(408).json({
-				code: 408,
+				status: 408,
 				message: "server issue1"
 			});
 		}
 	}
 	catch (err) {
+		console.error(err);
 		return res.status(408).json({
-			code: 408,
+			status: 408,
 			message: "server issue2"
 		});
 	}
