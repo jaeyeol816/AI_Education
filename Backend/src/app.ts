@@ -1,9 +1,12 @@
 import express from 'express';
 import morgan from 'morgan';
 import { DataSource } from 'typeorm';
+import passport from 'passport';
+import passportConfig from './passport';
 
 import { User } from './entities/User';
 import { Course } from './entities/Course';
+
 
 const app = express();
 
@@ -31,6 +34,10 @@ const main = async () => {
 	}
 
 	app.use(morgan(process.env.NODE_ENV || 'dev'));
+	app.use(express.json());
+	app.use(express.urlencoded({ extended: false }));
+	app.use(passport.initialize());
+	passportConfig();
 
 	app.get('/', (req, res) => {
 		res.json({ signal: 'success~' });
