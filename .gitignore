@@ -3,3 +3,5 @@ envs
 *.env
 utility-container
 dist
+.vscode
+.DS_Store
