@@ -38,17 +38,20 @@ const upload = multer({
 export const postUploadRouter: RequestHandler = async (req, res, next) => {
 	try {
 		//아래. Keep in mind that ‘video’ is the field name which we will also set in front end. Both should be the same.
-		upload.single('video')(req, res, async(err) => {
-			console.error(err);
-			return res.status(408).json({
-				status: 408,
-				message: "error while uploading (multer-s3)"
-			});
+		upload.single('video')(req, res, async (err) => {
+			if (err) {
+				console.error(err);
+				return res.status(408).json({
+					status: 408,
+					message: "error while uploading (multer-s3)"
+				});
+			}
 		});
 		//upload는 완료. 데이터베이스 테이블에 주소정보 저장해야함.
-		//http요청의 body로부터 course id를 얻어오고, header의 토큰으로부터 user id를 얻어옴.
-		const courseId = +req.body.course_id;
-		const userId = (req as any).decoded.id;
+		//http요청의 params으로부터 course id를 얻어오고, header의 토큰으로부터 user id를 얻어옴.
+		const courseIdStr = req.query.course_id as string;
+		const courseId = parseInt(courseIdStr);
+		const userId = +((req as any).decoded.id);
 		//course가 있는가? 그리고 user가 course의 소유자가 맞는가?
 		let user = await User.findOne({ where: { id: userId } });
 		let course = await Course.findOne({ 
@@ -61,7 +64,7 @@ export const postUploadRouter: RequestHandler = async (req, res, next) => {
 				message: "course or user not found",
 			});
 		}
-		if (course.owned_user != user) {
+		if (course.owned_user.id != user.id) {
 			return res.status(405).json({
 				status: 405,
 				message: "not a owner of the course"
@@ -69,7 +72,9 @@ export const postUploadRouter: RequestHandler = async (req, res, next) => {
 		}
 		//videos 테이블에 저장.
 		let video = new Video();
-		const videoName = req.body.video_name;
+		const videoName = req.query.video_name as string;
+		console.log(req.file);		//test code
+		console.log(req.files);		//test code
 		const key = (req.file as any).key as string;
 		video.name = videoName;
 		video.url = key;
