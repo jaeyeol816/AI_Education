@@ -6,6 +6,10 @@ import passportConfig from './passport';
 
 import { User } from './entities/User';
 import { Course } from './entities/Course';
+import { Group } from './entities/Group';
+import { Video } from './entities/Video';
+import { Assignment } from './entities/Assignment';
+import { Submission } from './entities/Submisssion';
 import authRouter from './routes/auth';
 import courseRouter from './routes/course';
 
@@ -23,7 +27,7 @@ const main = async () => {
 			username: process.env.DB_USERNAME,
 			password: process.env.DB_PASSWORD,
 			database: process.env.DB_DATABASE,
-			entities: [User, Course],
+			entities: [User, Course, Group, Video, Submission, Assignment],
 			synchronize: true,
 			charset: 'UTF8_GENERAL_CI',
 		});

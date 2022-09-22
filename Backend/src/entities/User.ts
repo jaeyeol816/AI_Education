@@ -9,10 +9,13 @@ import {
 	OneToMany,
 	UpdateDateColumn,
 	JoinTable, 
-	ManyToMany
+	ManyToMany,
+	ManyToOne
 } from 'typeorm';
 
 import { Course } from './Course';
+import { Group } from './Group';
+import { Submission } from './Submisssion';
 
 
 @Entity('users')
@@ -72,4 +75,20 @@ export class User extends BaseEntity {
 		name: 'ta'
 	})
 	ta_ing_courses: Course[];
+
+	@ManyToOne(
+		() => Group,
+		group => group.users,
+		{ cascade: true, onDelete: 'SET NULL' }
+	)
+	@JoinColumn({
+		name: 'group'
+	})
+	group: Group;
+
+	@OneToMany(
+		() => Submission,
+		submissions => submissions.user
+	)
+	submissions: Submission[];
 }

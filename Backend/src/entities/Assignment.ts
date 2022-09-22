@@ -6,16 +6,18 @@ import {
 	CreateDateColumn,
 	OneToOne,
 	JoinColumn,
-	UpdateDateColumn,
 	OneToMany,
-	ManyToOne,
-	ManyToMany
+	UpdateDateColumn,
+	JoinTable, 
+	ManyToMany,
+	ManyToOne
 } from 'typeorm';
 
 import { Course } from './Course';
+import { Submission } from './Submisssion';
 
-@Entity('videos')
-export class Video extends BaseEntity {
+@Entity('assignments')
+export class Assignment extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number;
 
@@ -29,19 +31,22 @@ export class Video extends BaseEntity {
 		unique: false,
 		nullable: true,
 	})
-	url: string;
-
-	@CreateDateColumn()
-	created_at: Date;
-
-	@UpdateDateColumn()
-	updated_at: Date;
+	text: string;
 
 	@ManyToOne(
 		() => Course,
-		course => course.videos,
+		course => course.assignments,
 		{ cascade: true, onDelete: 'SET NULL' }
 	)
+	@JoinColumn({
+		name: 'course'
+	})
 	course: Course;
+
+	@OneToMany(
+		() => Submission,
+		submissions => submissions.assignment
+	)
+	submissions: Submission[];
 
 }

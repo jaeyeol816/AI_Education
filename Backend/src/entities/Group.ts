@@ -12,24 +12,19 @@ import {
 	ManyToMany
 } from 'typeorm';
 
+import { User } from './User';
 import { Course } from './Course';
 
-@Entity('videos')
-export class Video extends BaseEntity {
+@Entity('groups')	
+export class Group extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number;
 
 	@Column({
 		unique: false,
-		nullable: false,
-	})
-	name: string;
-
-	@Column({
-		unique: false,
 		nullable: true,
 	})
-	url: string;
+	group_name: string;
 
 	@CreateDateColumn()
 	created_at: Date;
@@ -39,9 +34,17 @@ export class Video extends BaseEntity {
 
 	@ManyToOne(
 		() => Course,
-		course => course.videos,
+		course => course.groups,
 		{ cascade: true, onDelete: 'SET NULL' }
 	)
+	@JoinColumn({
+		name: "course"
+	})
 	course: Course;
 
+	@OneToMany(
+		() => User,
+		users => users.group
+	)
+	users: User[];
 }
