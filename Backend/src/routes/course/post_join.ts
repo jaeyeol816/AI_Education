@@ -5,13 +5,23 @@ import { Course } from "../../entities/Course";
 
 export const postJoinRouter: RequestHandler = async (req, res, next) => {
 	try {
-		const userId = (req as any).decoded.id;
-		const findedUser = await User.findOne({ where: { id: userId } });
+		const userId = (req as any).decoded.id as number;
+		let findedUser = await User.findOne({ where: { id: userId } });
 		const courseCode = req.body.course_code as string;
-		let findedCourse = await Course.findOne({ where: { code: courseCode } });
+		let findedCourse = await Course.findOne({ 
+			where: { code: courseCode }, 
+			relations: { registered_users: true } 
+		});
 		if (findedCourse && findedUser) {
-			findedCourse.registered_users.push(findedUser);
+			if (!(findedCourse.registered_users)) {
+				findedCourse.registered_users = [findedUser];
+			}
+			else {
+				findedCourse.registered_users.push(findedUser);
+			}
 			await findedCourse.save();
+			await findedUser.save();
+
 			return res.status(200).json({
 				status: 200,
 				message: "joined to the course"

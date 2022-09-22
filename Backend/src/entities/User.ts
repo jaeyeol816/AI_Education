@@ -50,6 +50,7 @@ export class User extends BaseEntity {
 	@ManyToMany(
 		() => Course,
 		studying_courses => studying_courses.registered_users,
+		{ cascade: true }
 	)
 	@JoinTable({
 		name: 'register'
@@ -58,16 +59,17 @@ export class User extends BaseEntity {
 
 	@OneToMany(
 		() => Course,
-		owning_course => owning_course.owned_user,
+		owning_course => owning_course.owned_user
 	)
 	owning_course: Course[];
 
 	@ManyToMany(
 		() => Course,
-		ta_ing_courses => ta_ing_courses.registered_users,
+		ta_ing_courses => ta_ing_courses.ta_ing_users,
+		{cascade: true}
 	)
 	@JoinTable({
 		name: 'ta'
 	})
-	ta_ing_courses: Course[]
+	ta_ing_courses: Course[];
 }

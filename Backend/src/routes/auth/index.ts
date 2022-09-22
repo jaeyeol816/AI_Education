@@ -6,7 +6,7 @@ import { postSignupRouter } from './post_signup';
 
 const router = express.Router();
 
-router.post('/signin', verifyToken, postSigninRouter);
+router.post('/signin', postSigninRouter);
 router.post('/signup', postSignupRouter);
 
 export default router;

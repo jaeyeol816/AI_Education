@@ -4,12 +4,11 @@ import {
 	Column,
 	PrimaryGeneratedColumn,
 	CreateDateColumn,
-	OneToOne,
 	JoinColumn,
 	UpdateDateColumn,
-	OneToMany,
 	ManyToOne,
-	ManyToMany
+	ManyToMany,
+	JoinTable
 } from 'typeorm';
 
 import { User } from './User';
@@ -31,6 +30,12 @@ export class Course extends BaseEntity {
 	})
 	code: string;
 
+	@Column({
+		unique: true,
+		nullable: false,
+	})
+	ta_code: string;
+
 	@CreateDateColumn()
 	created_at: Date;
 
@@ -49,13 +54,13 @@ export class Course extends BaseEntity {
 
 	@ManyToMany(
 		() => User,
-		registered_users => registered_users.studying_courses
+		registered_users => registered_users.studying_courses,
 	)
 	registered_users: User[]
 
 	@ManyToMany(
 		() => User,
-		registered_users => registered_users.ta_ing_courses
+		registered_users => registered_users.ta_ing_courses,
 	)
 	ta_ing_users: User[]
 }

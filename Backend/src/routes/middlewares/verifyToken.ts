@@ -4,10 +4,11 @@ import jwt from 'jsonwebtoken';
 
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
   try {
-    (req as any).decoded = jwt.verify(req.headers.authorization as string, process.env.JWT_SECRET as string);
+    (req as any).decoded = jwt.verify((req.headers.authorization as string).split(' ')[1], process.env.JWT_SECRET as string);
     return next();
   }
   catch (err) {
+		console.error(err);
     if ((err as any).name == 'TokenExpiredError') {
       return res.status(402).json({
         status: 402,
