@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import { DataSource } from 'typeorm';
 import passport from 'passport';
 import passportConfig from './passport';
+import AWS from 'aws-sdk';
 
 import { User } from './entities/User';
 import { Course } from './entities/Course';
@@ -44,6 +45,12 @@ const main = async () => {
 	app.use(express.urlencoded({ extended: false }));
 	app.use(passport.initialize());
 	passportConfig();
+
+	AWS.config.update({
+		accessKeyId: process.env.S3_ACCESS_KEY_ID,
+		secretAccessKey: process.env.S3_SECRET_KEY,
+		region: process.env.S3_REGION
+	});
 
 	app.use('/auth', authRouter);
 	app.use('/course', courseRouter);
