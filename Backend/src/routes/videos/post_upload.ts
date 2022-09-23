@@ -33,6 +33,7 @@ const upload = multer({
 			cb(null, `videos/${Date.now()}${path.basename(file.originalname)}`);
 		},
 	}),
+	limits: { fileSize: 3 * 1024 * 1024 * 1024 }
 });
 
 export const postUploadRouter: RequestHandler = async (req, res, next) => {
@@ -46,45 +47,45 @@ export const postUploadRouter: RequestHandler = async (req, res, next) => {
 					message: "error while uploading (multer-s3)"
 				});
 			}
-		});
-		//upload는 완료. 데이터베이스 테이블에 주소정보 저장해야함.
-		//http요청의 params으로부터 course id를 얻어오고, header의 토큰으로부터 user id를 얻어옴.
-		const courseIdStr = req.query.course_id as string;
-		const courseId = parseInt(courseIdStr);
-		const userId = +((req as any).decoded.id);
-		//course가 있는가? 그리고 user가 course의 소유자가 맞는가?
-		let user = await User.findOne({ where: { id: userId } });
-		let course = await Course.findOne({ 
-			where: { id: courseId },
-			relations: { owned_user: true },
-		});
-		if (!course || !user) {
-			return res.status(406).json({
-				status: 406,
-				message: "course or user not found",
+			//upload는 완료. 데이터베이스 테이블에 주소정보 저장해야함.
+			//http요청의 params으로부터 course id를 얻어오고, header의 토큰으로부터 user id를 얻어옴.
+			const courseIdStr = req.query.course_id as string;
+			const courseId = parseInt(courseIdStr);
+			const userId = +((req as any).decoded.id);
+			//course가 있는가? 그리고 user가 course의 소유자가 맞는가?
+			let user = await User.findOne({ where: { id: userId } });
+			let course = await Course.findOne({ 
+				where: { id: courseId },
+				relations: { owned_user: true },
 			});
-		}
-		if (course.owned_user.id != user.id) {
-			return res.status(405).json({
-				status: 405,
-				message: "not a owner of the course"
+			if (!course || !user) {
+				return res.status(406).json({
+					status: 406,
+					message: "course or user not found",
+				});
+			}
+			if (course.owned_user.id != user.id) {
+				return res.status(405).json({
+					status: 405,
+					message: "not a owner of the course"
+				});
+			}
+			//videos 테이블에 저장.
+			let video = new Video();
+			const videoName = req.query.video_name as string;
+			console.log(req.file);		//test code
+			console.log(req.files);		//test code
+			const key = (req.file as any).key as string;
+			video.name = videoName;
+			video.url = key;
+			video.course = course;
+			await video.save();
+			await course.save();
+			return res.status(200).json({
+				status: 200,
+				message: "video storing successed"
 			});
-		}
-		//videos 테이블에 저장.
-		let video = new Video();
-		const videoName = req.query.video_name as string;
-		console.log(req.file);		//test code
-		console.log(req.files);		//test code
-		const key = (req.file as any).key as string;
-		video.name = videoName;
-		video.url = key;
-		video.course = course;
-		await video.save();
-		await course.save();
-		return res.status(200).json({
-			status: 200,
-			message: "video storing successed"
-		})
+		});
 	}
 	catch (err) {
 		console.error(err);
