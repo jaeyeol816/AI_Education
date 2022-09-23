@@ -3,7 +3,7 @@ import { RequestHandler } from "express";
 import { Course } from "../../entities/Course";
 import { User } from "../../entities/User";
 
-export const getListRouter: RequestHandler = async (req, res, next) => {
+export const postListRouter: RequestHandler = async (req, res, next) => {
 	try {
 		const userId = +((req as any).decoded.id);
 		console.log(userId);

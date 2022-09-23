@@ -6,8 +6,8 @@ import { Course } from '../../entities/Course';
 //특정 course의 video리스트를 반환하는 역할
 export const getListsRouter: RequestHandler = async (req, res, next) => {
 	try {
-		const courseId = +(req.query.course_id as string);
-		const course = await Course.findOne({ where: { id: courseId } });
+		const courseName = req.body.course_name;
+		const course = await Course.findOne({ where: { name: courseName } });
 		if (!course) {
 			return res.status(406).json({
 				status: 406,
@@ -15,7 +15,7 @@ export const getListsRouter: RequestHandler = async (req, res, next) => {
 			});
 		}
 		const videos = await Video.find({ 
-			where: {course: { id: courseId } },
+			where: {course: { name: courseName } },
 			select: { name: true }	
 		});
 		if (!videos) {

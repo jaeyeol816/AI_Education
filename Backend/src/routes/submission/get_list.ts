@@ -8,9 +8,12 @@ import { Course } from "../../entities/Course";
 export const getListRouter: RequestHandler = async (req, res, next) => {
 	try {
 		//1. 사용자, 수업, 과제 정보 가져오기
-
-		//2. 사용자가 유효한지 확인 (교강사 또는 TA인지)
 		const userId = +((req as any).decoded.id);
+		const assignmentId = req.body.assignment_id;
+		
+
+		//2. 사용자가 교강사 또는 TA인지 확인. 
+		
 		
 
 		//3. assignment가 유효한지 확인
@@ -18,6 +21,6 @@ export const getListRouter: RequestHandler = async (req, res, next) => {
 		//4. 처리.
 	}
 	catch (err) {
-		
+
 	}
 }

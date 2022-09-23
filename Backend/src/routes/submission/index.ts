@@ -7,6 +7,6 @@ import { getListRouter } from './get_list';
 const router = express.Router();
 
 router.post('/submit', verifyToken, postSubmitRouter);
-router.get('/list', verifyToken, getListRouter);
+router.post('/list', verifyToken, getListRouter);
 
 export default router;
