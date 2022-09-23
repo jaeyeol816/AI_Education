@@ -5,14 +5,14 @@ import { Course }	from '../../entities/Course';
 
 export const getListRouter: RequestHandler = async (req, res, next) => {
 	try {
-		const courseId = +(req.query.course_id as string);
-		if (!courseId) {
+		const courseName = req.body.course_name;
+		if (!courseName) {
 			return res.status(406).json({
 				status: 406,
 				message: "course id not available",
 			});
 		}
-		const course = await Course.findOne({ where: {id: courseId } });
+		const course = await Course.findOne({ where: { name: courseName } });
 		if (!course) {
 			return res.status(407).json({
 				status: 407,
@@ -20,7 +20,7 @@ export const getListRouter: RequestHandler = async (req, res, next) => {
 			});
 		}
 		const assignments = await Assignment.find({
-			where: { course: {id: courseId }},
+			where: { course: { name: courseName }},
 		});
 		return res.status(200).json({
 			status: 200,

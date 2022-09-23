@@ -73,8 +73,6 @@ export const postUploadRouter: RequestHandler = async (req, res, next) => {
 			//videos 테이블에 저장.
 			let video = new Video();
 			const videoName = req.query.video_name as string;
-			console.log(req.file);		//test code
-			console.log(req.files);		//test code
 			const key = (req.file as any).key as string;
 			video.name = videoName;
 			video.url = key;
