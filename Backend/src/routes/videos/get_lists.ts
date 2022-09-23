@@ -31,7 +31,7 @@ export const getListsRouter: RequestHandler = async (req, res, next) => {
 	}
 	catch (err) {
 		console.error(err);
-		return res.json({
+		return res.status(408).json({
 			status: 408,
 			message: "server error"
 		});
