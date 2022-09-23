@@ -22,7 +22,7 @@ export class Assignment extends BaseEntity {
 	id: number;
 
 	@Column({
-		unique: false,
+		unique: true,
 		nullable: false,
 	})
 	name: string;

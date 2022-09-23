@@ -25,7 +25,7 @@ export const getListRouter: RequestHandler = async (req, res, next) => {
 		return res.status(200).json({
 			status: 200,
 			assignments: assignments,
-		})
+		});
 	}
 	catch (err) {
 		return res.status(408).json({

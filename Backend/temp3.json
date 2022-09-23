@@ -1,0 +1,53 @@
+[
+	{
+		"assignment":{
+			"id": 1,
+			"name": "과제과제과제",
+			"text": "과제를 해 봐요!"
+		},
+		"user": {
+			"id": 4,
+			"email": "temp2@gmail.com",
+			"password": "$2b$12$HgcEhEfHo6uV0PnYWWvnpeqyA6Pym/uIoujFTTaAQTV/5FkAYJbii",
+			"name": "temp2",
+			"created_at": "2022-09-22T01:25:51.128Z",
+			"updated_at": "2022-09-22T01:25:51.128Z"
+		},
+		"text": "안녕하세요. 과제 제출물 입니다",
+		"id": 1
+	},
+	{
+		"assignment":{
+			"id": 1,
+			"name": "과제과제과제",
+			"text": "과제를 해 봐요!"
+		},
+		"user": {
+			"id": 4,
+			"email": "temp2@gmail.com",
+			"password": "$2b$12$HgcEhEfHo6uV0PnYWWvnpeqyA6Pym/uIoujFTTaAQTV/5FkAYJbii",
+			"name": "temp2",
+			"created_at": "2022-09-22T01:25:51.128Z",
+			"updated_at": "2022-09-22T01:25:51.128Z"
+		},
+		"text": "안녕하세요. 과제 제출물 입니다",
+		"id": 2
+	},
+	{
+		"assignment":{
+			"id": 1,
+			"name": "과제과제과제",
+			"text": "과제를 해 봐요!"
+		},
+		"user": {
+			"id": 4,
+			"email": "temp2@gmail.com",
+			"password": "$2b$12$HgcEhEfHo6uV0PnYWWvnpeqyA6Pym/uIoujFTTaAQTV/5FkAYJbii",
+			"name": "temp2",
+			"created_at": "2022-09-22T01:25:51.128Z",
+			"updated_at": "2022-09-22T01:25:51.128Z"
+		},
+		"text": "안녕하세요. 과제 제출물 입니다",
+		"id": 3
+	}
+]

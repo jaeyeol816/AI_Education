@@ -15,7 +15,8 @@ import authRouter from './routes/auth';
 import courseRouter from './routes/course';
 import videoRouter from './routes/videos';
 import groupRouter from './routes/group';
-
+import assignmentRouter from './routes/assignment';
+import submissonRouter from './routes/submission';
 
 const app = express();
 
@@ -58,6 +59,8 @@ const main = async () => {
 	app.use('/course', courseRouter);
 	app.use('/video', videoRouter);
 	app.use('/group', groupRouter);
+	app.use('/assignment', assignmentRouter);
+	app.use('/submission', submissonRouter);
 
 	app.get('/', (req, res) => {
 		res.json({ signal: 'success~' });

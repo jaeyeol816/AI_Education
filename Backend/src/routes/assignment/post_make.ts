@@ -8,15 +8,18 @@ export const postMakeRouter: RequestHandler = async (req, res, next) => {
 	try {
 		//일단 사람, 강좌 아이디를 얻은 후 해당 사람이 해당 강좌의 주인이 맞는지 확인
 		const userId = +((req as any).decoded.id);
-		const courseId = +(req.body.course_id);
-		if (!userId || !courseId) {
+		const courseName = req.body.course_name as string;
+		if (!userId || !courseName) {
 			return res.status(406).json({
 				status: 405,
 				message: "user / course id not available",
 			});
 		}
 		let user = await User.findOne({ where: { id: userId } });
-		let course = await Course.findOne({ where: { id: courseId } });
+		let course = await Course.findOne({ 
+			where: { name: courseName },
+			relations: { owned_user: true },
+		});
 		if (!user || !course) {
 			return res.status(406).json({
 				status: 406,

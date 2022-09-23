@@ -24,7 +24,7 @@ export class Submission extends BaseEntity {
 		unique: false,
 		nullable: true,
 	})
-	url: string;
+	text: string;
 
 	@ManyToOne(
 		() => Assignment,
