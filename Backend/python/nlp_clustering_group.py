@@ -32,7 +32,7 @@ for respIndex, respond in enumerate(inputlist):
     for entity in entities:
         if str(entity.name) not in stopwords:
             output = output + ' ' + str(entity.name)
-    # print(output)
+    print(output)
     outputlist.append(output)
 
 from sklearn.feature_extraction.text import CountVectorizer
@@ -42,12 +42,13 @@ cv.fit(outputlist)
 outputlist = cv.transform(outputlist)
 # print(outputlist)
 # print(outputlist.toarray())
+print("\n벡터화된 문단의 예시\n",outputlist.toarray()[0],end='\n\n')
 
 from sklearn.cluster import KMeans
 cluster_num = 4
 kmeans = KMeans(n_clusters=cluster_num, max_iter=1000, random_state=922)
 cluster_labels = kmeans.fit_predict(outputlist)
-print(cluster_labels)
+print("KMeans로 군집화된 벡터들\n",cluster_labels)
 
 labelNumList = [0] * cluster_num
 

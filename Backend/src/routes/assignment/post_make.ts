@@ -35,7 +35,7 @@ export const postMakeRouter: RequestHandler = async (req, res, next) => {
 
 		//Assignmet 테이블에 저장
 		let assignment = new Assignment();
-		assignment.name = req.body.name;
+		assignment.name = req.body.assignment_name;
 		assignment.text = req.body.text;
 		assignment.course = course;
 		await assignment.save();

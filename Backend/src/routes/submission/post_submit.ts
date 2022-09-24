@@ -3,6 +3,7 @@ import { RequestHandler } from "express";
 import { Submission } from "../../entities/Submisssion";
 import { Assignment } from "../../entities/Assignment";
 import { User } from '../../entities/User';
+import { Course } from '../../entities/Course';
 
 export const postSubmitRouter: RequestHandler = async (req, res, next) => {
 	try {

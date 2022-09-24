@@ -16,7 +16,7 @@ const s3 = new AWS.S3();
 
 export const getDownloadRouter: RequestHandler = async (req, res, next) => {
 	try {
-		const videoName = req.body.video_name;
+		const videoName = (req.query.video_name as string);
 		if (!videoName) {
 			return res.status(406).json({
 				status: 406,
